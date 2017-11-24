@@ -1,0 +1,48 @@
+@import "../../../asset/scss/constant.scss";
+@import "../../../asset/scss/common.scss";
+
+$width: 250px;
+$input-height: 30px;
+
+.n-literal-input {
+  display: flex;
+  max-width: 100%;
+  width: $width;
+
+  span.icon {
+    flex-shrink: 0;
+    margin-right: 10px;
+    line-height: $input-height;
+    background: $background-color-white;
+  }
+
+  .n-literal-input-container {
+    flex-grow: 1;
+
+    input {
+      width: 100%;
+      padding: 0 10px;
+      height: $input-height;
+      font-size: $font-size-1;
+      border-radius: $border-radius-1;
+      border: $line-color-gray 1px solid;
+    }
+
+  }
+
+  .n-input-notice {
+    opacity: 0;
+    display: block;
+    color: $color-red;
+    height: 29px;
+    padding: 7px 0;
+    line-height: 15px;
+
+    @include n-ellipsis(1);
+
+    &.n-active {
+      opacity: 1;
+    }
+  }
+
+}
