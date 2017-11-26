@@ -3,17 +3,6 @@ import React from 'react';
 import fonts from '../../../asset/scss/fonts.scss';
 import styles from './input.scss';
 
-/**
- * 通用输入组件
- *
- * [String|Boolean] Props.defaultValue   默认值
- * [String]         Props.type           输入框类型
- * [Boolean]        Props.disabled       是否可用
- * [String]         Props.placeholder    占位文字
- * [Boolean]        Props.ignore         是否忽略空值
- * [String]         Props.leftIcon       左侧图标名(名称来自/asset/font/中的字体文件)
- *
- */
 
 const dataTypes = {
     'nullMessage': '该项不可为空',
@@ -26,6 +15,18 @@ const dataTypes = {
         regExp: /^[a-zA-Z0-9]{4,16}$/
     }
 }
+
+/**
+ * 通用输入组件
+ *
+ * [String|Boolean] Props.defaultValue   默认值
+ * [String]         Props.type           输入框类型
+ * [Boolean]        Props.disabled       是否可用
+ * [String]         Props.placeholder    占位文字
+ * [Boolean]        Props.ignore         是否忽略空值
+ * [String]         Props.leftIcon       左侧图标名(名称来自/asset/font/中的字体文件)
+ *
+ */
 
 class LiteralInput extends React.Component {
 
@@ -129,4 +130,52 @@ class LiteralInput extends React.Component {
 
 }
 
-export {LiteralInput};
+
+class Checkbox extends React.Component {
+
+    render() {
+        return <div className={styles["n-checkbox-container"]}>
+            <div className={styles["n-checkbox"]}>
+                <input type="checkbox"/>
+                <span className={styles["n-checkbox-background"]}></span>
+            </div>
+            <label>{this.props.label}</label>
+        </div>
+    }
+
+}
+
+class Radio extends React.Component {
+
+    render() {
+        return <div className={styles["n-radio-container"]}>
+            <div className={styles["n-radio"]}>
+                <input type="radio" name={this.props.name}/>
+                <span className={styles["n-radio-background"]}></span>
+            </div>
+            <label>{this.props.label}</label>
+        </div>
+    }
+
+}
+
+class RadioGroup extends React.Component {
+    render() {
+
+        const values = this.props.values || [];
+        const radios = values.map((item, index) => <span
+            className={styles["n-radio-item-container"]}><Radio
+            key={"radio-" + item.value}
+            label={item.label}
+            name={this.props.name}
+            value={item.value}/>
+        </span>);
+
+        return <div className={styles["n-radio-group-container"]}>
+            <label>{this.props.label}</label>
+            {radios}
+        </div>
+    }
+}
+
+export {LiteralInput, Checkbox, Radio, RadioGroup};

@@ -46,3 +46,120 @@ $input-height: 30px;
   }
 
 }
+
+.n-checkbox-container {
+
+  height: 20px;
+  display: inline-block;
+
+  label {
+    float: left;
+    line-height: 20px;
+    margin-left: 10px;
+  }
+
+  .n-checkbox {
+    float: left;
+    width: 20px;
+    height: 20px;
+    border: $line-color-gray 1px solid;
+    position: relative;
+    cursor: pointer;
+    border-radius: 5px;
+
+    input {
+      cursor: pointer;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      left: 0;
+      top: 0;
+      z-index: 10;
+
+      &:checked ~ span {
+        opacity: 1;
+      }
+    }
+
+    .n-checkbox-background {
+      border-radius: 3px;
+      display: block;
+      height: 14px;
+      width: 14px;
+      margin: 2px;
+      opacity: 0;
+      background: $color-blue;
+    }
+
+  }
+
+}
+
+.n-radio-container {
+
+  height: 20px;
+  display: inline-block;
+
+  label {
+    float: left;
+    line-height: 20px;
+    margin-left: 10px;
+  }
+
+  .n-radio {
+    float: left;
+    width: 20px;
+    height: 20px;
+    border: $line-color-gray 1px solid;
+    position: relative;
+    cursor: pointer;
+    border-radius: 50%;
+
+    input {
+      cursor: pointer;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      left: 0;
+      top: 0;
+      z-index: 10;
+
+      &:checked ~ span {
+        opacity: 1;
+      }
+    }
+
+    .n-radio-background {
+      border-radius: 50%;
+      display: block;
+      height: 14px;
+      width: 14px;
+      margin: 2px;
+      opacity: 0;
+      background: $color-blue;
+    }
+
+  }
+
+}
+
+.n-radio-group-container {
+
+  & > label {
+    float: left;
+    line-height: 20px;
+    margin-right: 50px;
+  }
+
+  .n-radio-item-container {
+    margin-right: 30px;
+    display: inline;
+
+    &:last-child {
+      margin: 0;
+    }
+  }
+
+}

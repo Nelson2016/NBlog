@@ -52,7 +52,10 @@ class Header extends React.Component {
                                       activeClassName={styles['n-active']}
                                       to="/admin/siteManagement/siteInformation">站点信息</Link>
                             </li>
-                            <li><Link activeClassName={styles['n-active']} to="/">功能设置</Link></li>
+                            <li><Link onlyActiveOnIndex={true}
+                                      activeClassName={styles['n-active']}
+                                      to="/admin/siteManagement/functionSet">功能设置</Link>
+                            </li>
                         </ul>
                     </menu>
                 </div>

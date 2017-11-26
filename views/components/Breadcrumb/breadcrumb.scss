@@ -1,7 +1,7 @@
 @import "../../../asset/scss/constant";
 @import "../../../asset/scss/common";
 
-.breadcrumb-container {
+.n-breadcrumb-container {
   width: 100%;
   display: flex;
   align-items: center;
@@ -12,7 +12,7 @@
 
   @include n-bottom-line();
 
-  .breadcrumb-label {
+  .n-breadcrumb-label {
     position: relative;
     padding-left: 10px;
 

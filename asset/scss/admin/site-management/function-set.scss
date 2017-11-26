@@ -1,0 +1,18 @@
+@import "../../constant";
+
+.function-set-container {
+  max-width: $admin-main-width;
+  margin: 0 auto;
+
+  .set-rows {
+
+    width: 275px;
+    margin: 0 auto;
+
+    .set-row {
+      margin-bottom: 20px;
+    }
+
+  }
+
+}
