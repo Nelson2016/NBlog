@@ -1,8 +1,12 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-import store from '../store/store';
+import configStore from '../store/configStore';
 import {Provider} from 'react-redux';
 import AppRouter from '../router/AppRouter';
+
+let store = configStore(window.REDUX_STATE);
+
+// console.log(store.getState());
 
 if (module.hot) {
     module.hot.accept()

@@ -8,7 +8,7 @@
     "prod": "run-s clean build:prod start:prod",
     "build:dev": "webpack --config ./webpack/webpack.dev.config.js --progress",
     "build:prod": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.prod.config.js --progress",
-    "clean": "rm -rf ./dist/* && cp ./favicon.ico ./dist/favicon.ico && cp ./asset/images/N-black.png ./dist/N-black.png",
+    "clean": "rimraf ./dist/* && cp-cli favicon.ico dist && cp-cli ./asset/images/N-black.png ./dist/N-black.png",
     "start:dev": "cross-env NODE_ENV=development nodemon ./webpack/start.dev --watch ./dist --watch ./server",
     "start:prod": "node ./dist/server.bundle"
   },
@@ -62,8 +62,12 @@
     "react-redux": "^5.0.6",
     "react-router": "^3.2.0",
     "redux": "^3.7.2",
+    "rimraf": "^2.6.2",
     "sass-loader": "^6.0.6",
     "url-loader": "^0.6.2",
     "webpack": "^3.8.1"
+  },
+  "dependencies": {
+    "react-breadcrumbs": "^1.6.6"
   }
 }

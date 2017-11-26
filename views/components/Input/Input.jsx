@@ -11,6 +11,7 @@ import styles from './input.scss';
  * [Boolean]        Props.disabled       是否可用
  * [String]         Props.placeholder    占位文字
  * [Boolean]        Props.ignore         是否忽略空值
+ * [String]         Props.leftIcon       左侧图标名(名称来自/asset/font/中的字体文件)
  *
  */
 

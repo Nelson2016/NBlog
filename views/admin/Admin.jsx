@@ -14,7 +14,7 @@ class Admin extends React.Component {
     }
 
     render() {
-        return <div className="admin-container">
+        return <div className="admin-container" style={{'minWidth':"1349px"}}>
             <Header/>
             <div ref='main-container' className="main-container">
                 {this.props.children}

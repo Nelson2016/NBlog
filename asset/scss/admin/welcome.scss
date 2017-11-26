@@ -1,0 +1,61 @@
+@import "../constant";
+@import "../common";
+
+.welcome-container {
+
+  max-width: $admin-main-width;
+  margin: 0 auto;
+  padding: 30px 10px;
+
+  .statistics {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    border-bottom: $font-color-gray 1px solid;
+
+    span {
+      padding: 5px 10px;
+      color: $font-color-gray;
+    }
+  }
+
+  .double {
+    width: 100%;
+
+    section {
+      width: 50%;
+      float: left;
+    }
+  }
+
+}
+
+/*表格通用样式*/
+.rows {
+  color: inherit;
+  padding: 5px 0;
+  display: inline-block;
+  line-height: 25px;
+}
+
+.table-title {
+  @extend .rows;
+  width: 622px;
+  @include n-ellipsis(1);
+  text-align: left;
+}
+
+.table-author {
+  @extend .rows;
+  width: 100px;
+}
+
+.table-date {
+  @extend .rows;
+  width: 130px;
+}
+
+.table-ups, .table-views, .table-comments {
+  @extend .rows;
+  width: 50px;
+}

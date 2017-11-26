@@ -7,113 +7,121 @@
   .header-top {
     height: 50px;
     background: $color-blue;
-    display: flex;
 
-    .logo-container {
+    .header-top-inner {
+      max-width: $admin-main-width;
       height: 100%;
-      flex-shrink: 0;
-      padding: 5px 15px;
+      display: flex;
+      margin: 0 auto;
 
-      img {
-        float: left;
+      .logo-container {
         height: 100%;
-      }
-
-      h1 {
-        line-height: 1;
-        margin-top: 25px;
-        font-style: italic;
-        float: left;
-        color: $font-color-white;
-        font-size: $font-size-1;
-      }
-    }
-
-    .nav-container {
-      flex-grow: 1;
-      padding: 0 15px 0 80px;
-
-      ul {
-        display: flex;
-        height: 100%;
-
-        li {
-          height: 100%;
-          text-align: center;
-          padding: 0 10px;
-          position: relative;
-
-          a {
-            word-break: keep-all;
-            font-size: $font-size-2;
-            color: $font-color-white;
-            line-height: 50px;
-          }
-
-          &.n-active:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 10px;
-            right: 10px;
-            height: 2px;
-            background: $background-color-white;
-          }
-        }
-      }
-    }
-
-    .user-container {
-      flex-shrink: 0;
-      padding: 10px 15px;
-
-      .avatar-container {
-        height: 30px;
-        width: 30px;
-        float: left;
-        border: $color-white 1px solid;
-        -webkit-border-radius: 50%;
-        -moz-border-radius: 50%;
-        border-radius: 50%;
-        padding: 5px;
+        flex-shrink: 0;
+        padding: 5px 15px;
 
         img {
-          width: 100%;
+          float: left;
           height: 100%;
+        }
+
+        h1 {
+          line-height: 1;
+          margin-top: 25px;
+          font-style: italic;
+          float: left;
+          color: $font-color-white;
+          font-size: $font-size-1;
         }
       }
 
-      .username {
-        float: left;
-        margin-left: 10px;
-        color: $font-color-white;
-        font-size: $font-size-2;
-        line-height: 30px;
+      .nav-container {
+        flex-grow: 1;
+        padding: 0 15px 0 80px;
+
+        ul {
+          display: flex;
+          height: 100%;
+
+          li {
+            height: 100%;
+            text-align: center;
+            padding: 0 10px;
+            position: relative;
+
+            a {
+              word-break: keep-all;
+              font-size: $font-size-2;
+              color: $font-color-white;
+              line-height: 50px;
+              height: 50px;
+              display: inline-block;
+
+              &.n-active:after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 10px;
+                right: 10px;
+                height: 2px;
+                background: $background-color-white;
+              }
+            }
+          }
+        }
       }
-    }
 
-    .menu-container {
-      flex-shrink: 0;
-      position: relative;
-      padding: 5px 15px;
+      .user-container {
+        flex-shrink: 0;
+        padding: 10px 15px;
 
-      &:before {
-        content: '';
-        position: absolute;
-        height: 20px;
-        left: 0;
-        top: 15px;
-        width: 1px;
-        background: $background-color-white;
-        transform: scaleX(.5);
+        .avatar-container {
+          height: 30px;
+          width: 30px;
+          float: left;
+          border: $color-white 1px solid;
+          -webkit-border-radius: 50%;
+          -moz-border-radius: 50%;
+          border-radius: 50%;
+          padding: 5px;
+
+          img {
+            width: 100%;
+            height: 100%;
+          }
+        }
+
+        .username {
+          float: left;
+          margin-left: 10px;
+          color: $font-color-white;
+          font-size: $font-size-2;
+          line-height: 30px;
+        }
       }
 
-      i {
-        margin: 0 5px;
-        color: $font-color-white;
-        font-size: $icon-size-6;
-        line-height: 40px;
-        text-align: center;
+      .menu-container {
+        flex-shrink: 0;
+        position: relative;
+        padding: 5px 15px;
+
+        &:before {
+          content: '';
+          position: absolute;
+          height: 20px;
+          left: 0;
+          top: 15px;
+          width: 1px;
+          background: $background-color-white;
+          transform: scaleX(.5);
+        }
+
+        i {
+          margin: 0 5px;
+          color: $font-color-white;
+          font-size: $icon-size-6;
+          line-height: 40px;
+          text-align: center;
+        }
       }
     }
   }
@@ -122,36 +130,43 @@
     height: 40px;
     background: $color-dark-blue;
 
-    .sub-nav {
+    .header-bottom-inner {
+      height: 100%;
+      max-width: $admin-main-width;
+      margin: 0 auto;
+      .sub-nav {
 
-      position: absolute;
-      padding-left: 182px;
+        position: absolute;
+        padding-left: 185px;
 
-      ul {
-        display: flex;
-        height: 100%;
-
-        li {
+        ul {
+          display: flex;
           height: 100%;
-          text-align: center;
-          padding: 0 10px;
-          position: relative;
 
-          a {
-            word-break: keep-all;
-            font-size: $font-size-1;
-            color: $font-color-white;
-            line-height: 40px;
-          }
+          li {
+            height: 100%;
+            text-align: center;
+            padding: 0 10px;
+            position: relative;
 
-          &.n-active:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 10px;
-            right: 10px;
-            height: 1px;
-            background: $background-color-white;
+            a {
+              word-break: keep-all;
+              font-size: $font-size-1;
+              color: $font-color-white;
+              line-height: 40px;
+              height: 40px;
+              display: inline-block;
+
+              &.n-active:after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 10px;
+                right: 10px;
+                height: 1px;
+                background: $background-color-white;
+              }
+            }
           }
         }
       }

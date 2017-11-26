@@ -1,0 +1,53 @@
+@import "../../../asset/scss/constant";
+@import "../../../asset/scss/common";
+
+.n-table {
+
+  table {
+
+    width: 100%;
+    border-collapse: collapse;
+
+    .n-table-caption {
+
+      color: $color-blue;
+      padding: 5px 0;
+      border-bottom: $color-blue 2px solid;
+
+      .n-table-caption-row {
+
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+
+        .n-table-title, .n-table-more {
+          color: inherit;
+        }
+
+      }
+    }
+
+    tr {
+
+      &:hover {
+        cursor: pointer;
+        color: $color-blue;
+      }
+
+      &:nth-child(even) {
+        background: $background-color-gray;
+      }
+
+      td {
+
+        color: inherit;
+        text-align: center;
+
+      }
+
+      &:nth-child(even) {
+        background: $background-color-gray;
+      }
+    }
+  }
+}
