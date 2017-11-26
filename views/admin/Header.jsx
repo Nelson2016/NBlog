@@ -42,9 +42,17 @@ class Header extends React.Component {
                 <div className={styles["header-bottom-inner"]}>
                     <menu className={styles['sub-nav']}>
                         <ul>
-                            <li><Link activeClassName={styles['n-active']} to="/admin/siteManagement">修改密码</Link></li>
-                            <li className={styles['n-active']}><Link to="/">站点信息</Link></li>
-                            <li><Link to="/">功能设置</Link></li>
+                            <li>
+                                <Link onlyActiveOnIndex={true}
+                                      activeClassName={styles['n-active']}
+                                      to="/admin/siteManagement/modifyPassword">修改密码</Link>
+                            </li>
+                            <li>
+                                <Link onlyActiveOnIndex={true}
+                                      activeClassName={styles['n-active']}
+                                      to="/admin/siteManagement/siteInformation">站点信息</Link>
+                            </li>
+                            <li><Link activeClassName={styles['n-active']} to="/">功能设置</Link></li>
                         </ul>
                     </menu>
                 </div>

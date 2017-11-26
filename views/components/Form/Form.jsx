@@ -1,7 +1,7 @@
 import React from 'react';
 
 /**
- * 表单组件
+ * 表单组(子元素必须设置ref属性)
  *
  * 检测表单包含的元素是否符合提交标准
  *
@@ -18,6 +18,7 @@ class Form extends React.Component {
 
         let refs = this.refs;
 
+        console.log(refs)
         for (let i in refs) {
             if (refs[i].checkValue && !refs[i].checkValue()) {
                 canSubmit = false

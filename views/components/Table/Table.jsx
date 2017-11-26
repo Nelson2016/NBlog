@@ -3,6 +3,13 @@ import {Link} from 'react-router';
 
 import styles from './table.scss';
 
+/**
+ * 通用表格组件
+ *
+ * [Object]     Props.data   表格数据
+ *
+ */
+
 class Table extends React.Component {
 
     constructor(props) {
