@@ -12,7 +12,6 @@
 
       color: $color-blue;
       padding: 5px 0;
-      border-bottom: $color-blue 2px solid;
 
       .n-table-caption-row {
 
@@ -20,14 +19,24 @@
         justify-content: space-between;
         align-items: flex-end;
 
-        .n-table-title, .n-table-more {
+        .n-table-title {
           color: inherit;
         }
 
+        .n-table-more {
+          color: inherit;
+          cursor: pointer;
+        }
+
       }
+
     }
 
     tr {
+
+      &:first-child{
+        border-top: $color-blue 2px solid;
+      }
 
       &:hover {
         cursor: pointer;
@@ -39,14 +48,9 @@
       }
 
       td {
-
         color: inherit;
         text-align: center;
 
-      }
-
-      &:nth-child(even) {
-        background: $background-color-gray;
       }
     }
   }

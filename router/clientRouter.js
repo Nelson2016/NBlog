@@ -22,7 +22,7 @@ async function clientRoute(ctx, next) {
                 </Provider>
             ),
             state: `${JSON.stringify(state)}`,
-            host: ctx.host
+            host: ctx.host,
         })
     } else {
         await next()

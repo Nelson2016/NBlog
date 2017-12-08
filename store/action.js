@@ -12,4 +12,11 @@ const updateAdminNewList = (data) => {
     }
 };
 
-export {updateAdminHotList, updateAdminNewList};
+const updateArticleList = (data) => {
+    return {
+        type: "updateArticleList",
+        data
+    }
+};
+
+export {updateAdminHotList, updateAdminNewList, updateArticleList};

@@ -31,9 +31,9 @@
 }
 
 /*Top/Bottom line*/
-@mixin n-bottom-line{
+@mixin n-bottom-line {
   position: relative;
-  &:after{
+  &:after {
     bottom: 0;
     left: 0;
     right: 0;
@@ -44,9 +44,10 @@
     background: $line-color-gray;
   }
 }
-@mixin n-top-line{
+
+@mixin n-top-line {
   position: relative;
-  &:after{
+  &:after {
     top: 0;
     left: 0;
     right: 0;

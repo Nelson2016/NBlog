@@ -5,7 +5,7 @@
 
   max-width: $admin-main-width;
   margin: 0 auto;
-  padding: 30px 10px;
+  padding: 30px 0;
 
   .statistics {
     display: flex;
@@ -33,14 +33,15 @@
 /*表格通用样式*/
 .rows {
   color: inherit;
-  padding: 5px 0;
+  padding: 5px 10px;
   display: inline-block;
   line-height: 25px;
+  vertical-align: middle;
 }
 
 .table-title {
   @extend .rows;
-  width: 622px;
+  width: 542px;
   @include n-ellipsis(1);
   text-align: left;
 }
@@ -52,10 +53,10 @@
 
 .table-date {
   @extend .rows;
-  width: 130px;
+  width: 150px;
 }
 
 .table-ups, .table-views, .table-comments {
   @extend .rows;
-  width: 50px;
+  width: 70px;
 }

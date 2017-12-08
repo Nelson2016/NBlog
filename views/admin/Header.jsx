@@ -1,6 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router';
 
+import navigator from './navigator';
+
 import N from '../../asset/images/N-white.png';
 import avatar from '../../asset/images/common/avatar.png';
 
@@ -9,7 +11,50 @@ import styles from '../../asset/scss/admin/header.scss';
 
 class Header extends React.Component {
 
+    componentDidMount() {
+        this.activeSubNavigator();
+    }
+
+    componentDidUpdate() {
+        this.activeSubNavigator();
+    }
+
+    activeSubNavigator() {
+
+        let mainActiveNavigator = document.querySelector("." + styles["nav-container"] + " ." + styles["n-active"])
+
+        if (mainActiveNavigator) {
+            let subNavigators = document.querySelectorAll("." + styles["sub-nav"]);
+            let mainActiveIndex = parseInt(mainActiveNavigator.getAttribute('data-index'));
+            for (let i = 0; i < subNavigators.length; i++) {
+                let itemClassList = subNavigators[i].classList;
+                if(i === mainActiveIndex){
+                    itemClassList.add(styles["n-active"]);
+                }else{
+                    itemClassList.contains(styles["n-active"]) && itemClassList.remove(styles["n-active"]);
+                }
+            }
+        }
+
+    }
+
     render() {
+        let mainNavigator = navigator.map((mainItem, mainIndex) => <li key={"main-navigator-" + mainIndex}>
+            <Link activeClassName={styles['n-active']} to={mainItem.link} data-index={mainIndex}>{mainItem.text}</Link>
+        </li>);
+
+        let subNavigator = navigator.map((mainItem, mainIndex) => <menu key={"sub-navigator-container-" + mainIndex}
+                                                                        className={styles['sub-nav']}>
+            <ul>
+                {mainItem.children.map((subItem, subIndex) => <li key={"sub-navigator-" + subIndex}>
+                    <Link onlyActiveOnIndex={true}
+                          activeClassName={styles['n-active']}
+                          to={subItem.link}>{subItem.text}
+                    </Link>
+                </li>)}
+            </ul>
+        </menu>);
+
         return <div className={styles["header-container"]}>
             <div className={styles["header-top"]}>
                 <div className={styles["header-top-inner"]}>
@@ -19,11 +64,7 @@ class Header extends React.Component {
                     </div>
                     <nav className={styles["nav-container"]}>
                         <ul className={styles["main-nav"]}>
-                            <li><Link activeClassName={styles['n-active']} to="/admin/siteManagement">站点管理</Link></li>
-                            <li><Link to="/">站点内容</Link></li>
-                            <li><Link to="/">用户管理</Link></li>
-                            <li><Link to="/">财务管理</Link></li>
-                            <li><Link to="/">数据统计</Link></li>
+                            {mainNavigator}
                         </ul>
                     </nav>
                     <div className={styles["user-container"]}>
@@ -40,24 +81,7 @@ class Header extends React.Component {
             </div>
             <div className={styles['header-bottom']}>
                 <div className={styles["header-bottom-inner"]}>
-                    <menu className={styles['sub-nav']}>
-                        <ul>
-                            <li>
-                                <Link onlyActiveOnIndex={true}
-                                      activeClassName={styles['n-active']}
-                                      to="/admin/siteManagement/modifyPassword">修改密码</Link>
-                            </li>
-                            <li>
-                                <Link onlyActiveOnIndex={true}
-                                      activeClassName={styles['n-active']}
-                                      to="/admin/siteManagement/siteInformation">站点信息</Link>
-                            </li>
-                            <li><Link onlyActiveOnIndex={true}
-                                      activeClassName={styles['n-active']}
-                                      to="/admin/siteManagement/functionSet">功能设置</Link>
-                            </li>
-                        </ul>
-                    </menu>
+                    {subNavigator}
                 </div>
             </div>
         </div>

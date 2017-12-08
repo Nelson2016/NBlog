@@ -130,16 +130,32 @@ class LiteralInput extends React.Component {
 
 }
 
-
+/**
+ * 通用多选组件
+ *
+ * [String]         Props.label          标签值
+ * [String]         Props.forItem        全选对象data-item值
+ * [String]         Props.item           被全选对象data-item值
+ */
 class Checkbox extends React.Component {
 
+    onChange(){
+        let forItem = this.props.forItem;
+        if(forItem){
+            let items = document.querySelectorAll('input[type=checkbox][data-item=' + forItem + ']');
+            for(let i = 0 ; i < items.length ; i++){
+                items[i].checked = this.refs.checkbox.checked;
+            }
+        }
+    }
+
     render() {
-        return <div className={styles["n-checkbox-container"]}>
+        return <div className={styles["n-checkbox-container"]} style={this.props.style}>
             <div className={styles["n-checkbox"]}>
-                <input type="checkbox"/>
+                <input ref='checkbox' type="checkbox" data-item={this.props.item} onChange={this.onChange.bind(this)} />
                 <span className={styles["n-checkbox-background"]}></span>
             </div>
-            <label>{this.props.label}</label>
+            {this.props.label && <label>{this.props.label}</label>}
         </div>
     }
 
@@ -148,7 +164,7 @@ class Checkbox extends React.Component {
 class Radio extends React.Component {
 
     render() {
-        return <div className={styles["n-radio-container"]}>
+        return <div className={styles["n-radio-container"]} style={this.props.style}>
             <div className={styles["n-radio"]}>
                 <input type="radio" name={this.props.name}/>
                 <span className={styles["n-radio-background"]}></span>
@@ -178,4 +194,17 @@ class RadioGroup extends React.Component {
     }
 }
 
-export {LiteralInput, Checkbox, Radio, RadioGroup};
+class NumberBox extends React.Component {
+
+    render(){
+        return <div className={styles['n-number-box-container']}>
+            <input type="number" />
+            <div ref='loading' className={styles['n-number-box-loading']}>
+                <i className={fonts['icon-loading']} data-icon> </i>
+            </div>
+        </div>
+    }
+
+}
+
+export {LiteralInput, Checkbox, Radio, RadioGroup,NumberBox};

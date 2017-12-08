@@ -136,8 +136,13 @@
       margin: 0 auto;
       .sub-nav {
 
+        display: none;
         position: absolute;
         padding-left: 185px;
+
+        &.n-active{
+          display: block;
+        }
 
         ul {
           display: flex;

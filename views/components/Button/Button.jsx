@@ -7,6 +7,7 @@ import styles from './button.scss';
  * 通用按钮组件
  *
  * [String]     Props.type [normal]     按钮类型
+ * [String]     Props.text              按钮文本
  * [Boolean]    Props.disabled          是否可用
  * [Function]   Props.onClick           点击回调
  *

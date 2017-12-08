@@ -77,9 +77,6 @@ class Welcome extends React.Component {
         }
     }
 
-    componentDidMount() {
-    }
-
     render() {
 
         return <div className={styles['welcome-container']}>

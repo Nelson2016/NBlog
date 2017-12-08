@@ -6,7 +6,7 @@ import styles from './table.scss';
 /**
  * 通用表格组件
  *
- * [Object]     Props.data   表格数据
+ * [Object]     Props.data [{td,td},{td,td}]   表格数据
  *
  */
 
@@ -29,12 +29,12 @@ class Table extends React.Component {
 
         return <div className={styles["n-table"]} style={this.props.style}>
             <table>
-                <caption className={styles["n-table-caption"]}>
+                {data.title && <caption className={styles["n-table-caption"]}>
                     <div className={styles["n-table-caption-row"]}>
-                        <h4 className={styles["n-table-title"]}>{data.title}</h4>
-                        <Link className={styles["n-table-more"]}>{data.more.text}</Link>
+                        {data.title && <h4 className={styles["n-table-title"]}>{data.title}</h4>}
+                        {data.more && <Link className={styles["n-table-more"]}>{data.more.text}</Link>}
                     </div>
-                </caption>
+                </caption>}
                 <tbody>
                 {rows}
                 </tbody>

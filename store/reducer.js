@@ -1,17 +1,17 @@
 let reducers = (state, action) => {
     switch (action.type) {
         case "updateAdminHotList":
-            var newState = {
+            return Object.assign(state, {
                 adminHotList: action.data
-            };
-            return Object.assign(state, newState);
-            break;
+            });
         case "updateAdminNewList":
-            var newState = {
+            return Object.assign(state, {
                 adminNewList: action.data
-            };
-            return Object.assign(state, newState);
-            break;
+            });
+        case "updateArticleList":
+            return Object.assign(state, {
+                articleList: action.data
+            });
         default :
             return state;
     }
