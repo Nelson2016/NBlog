@@ -1,13 +1,10 @@
 @import "../../constant";
+@import "../../common";
 
 .site-information-container {
-  max-width: $admin-main-width;
-  margin: 0 auto;
+  @include wrap;
 
-  .modify-password-inputs {
-    width: 250px;
-    margin: 0 auto;
-    padding-top: 30px;
+  .notice {
+    margin-top: $margin-padding-4;
   }
-
 }

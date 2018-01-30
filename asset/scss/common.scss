@@ -1,6 +1,13 @@
 @import "constant.scss";
 @import "reset.scss";
 
+/*Body*/
+@mixin wrap {
+  max-width: $admin-main-width;
+  margin: 0 auto;
+  padding: 30px 0;
+}
+
 /*Overflow ellipsis*/
 @mixin n-ellipsis($num) {
   @if $num == 1 {

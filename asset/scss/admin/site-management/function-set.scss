@@ -1,13 +1,13 @@
 @import "../../constant";
+@import "../../common";
 
 .function-set-container {
-  max-width: $admin-main-width;
-  margin: 0 auto;
+  @include wrap;
 
   .set-rows {
 
     width: 275px;
-    margin: 0 auto;
+    margin: 50px auto;
 
     .set-row {
       margin-bottom: 20px;

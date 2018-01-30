@@ -1,0 +1,54 @@
+@import "../../constant";
+@import "../../common";
+
+.user-management-container {
+  @include wrap;
+
+  .page-container {
+    margin: $margin-padding-4 0;
+  }
+
+  .user-list-container {
+    margin-top: $margin-padding-4;
+  }
+
+}
+
+/*表格通用样式*/
+.rows {
+  color: inherit;
+  display: inline-block;
+  line-height: 25px;
+  vertical-align: middle;
+  font-size: $font-size-1;
+  text-align: center;
+}
+
+.table-username {
+  @extend .rows;
+  width: 325px;
+  @include n-ellipsis(1);
+  text-align: left;
+}
+
+.table-email {
+  @extend .rows;
+  width: 324px;
+  text-align: left;
+}
+
+.table-date {
+  @extend .rows;
+  width: 150px;
+}
+
+.table-checkbox {
+  @extend .rows;
+  width: 35px;
+  line-height: 12px;
+}
+
+.table-comments, .table-oauth {
+  @extend .rows;
+  width: 70px;
+}

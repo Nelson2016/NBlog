@@ -9,9 +9,23 @@ let reducers = (state, action) => {
                 adminNewList: action.data
             });
         case "updateArticleList":
-            return Object.assign(state, {
+            return Object.assign({}, state, {
                 articleList: action.data
             });
+        case "updateCommentList":
+            return Object.assign(state, {
+                commentList: action.data
+            });
+        case "updateCategoryList":
+            return Object.assign({}, state, {
+                categoryList: action.data
+            });
+        case "updateUserList":
+            return Object.assign(state, {
+                userList: action.data
+            });
+        case "changeLoginStatus":
+            return Object.assign({}, state, action.data);
         default :
             return state;
     }

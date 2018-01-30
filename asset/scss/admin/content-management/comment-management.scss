@@ -1,0 +1,47 @@
+@import "../../constant";
+@import "../../common";
+
+.comment-management-container {
+  @include wrap;
+
+  .page-container {
+    margin: $margin-padding-4 0;
+  }
+
+  .comment-list-container {
+    margin-top: $margin-padding-4;
+  }
+
+}
+
+/*表格通用样式*/
+.rows {
+  color: inherit;
+  display: inline-block;
+  line-height: 25px;
+  vertical-align: middle;
+  font-size: $font-size-1;
+  text-align: center;
+}
+
+.table-content {
+  @extend .rows;
+  width: 656px;
+  @include n-ellipsis(1);
+  text-align: left;
+}
+
+.table-author {
+  @extend .rows;
+  width: 100px;
+}
+
+.table-date {
+  @extend .rows;
+  width: 150px;
+}
+
+.table-checkbox {
+  @extend .rows;
+  width: 16px;
+}

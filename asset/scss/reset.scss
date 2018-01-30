@@ -92,6 +92,11 @@ textarea {
   box-shadow: none;
 }
 
+input::placeholder, textarea::placeholder {
+  color: $font-color-gray;
+  font-size: $font-size-1;
+}
+
 tbody {
   outline: none;
 }

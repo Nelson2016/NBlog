@@ -1,0 +1,10 @@
+@import "../../constant";
+@import "../../common";
+
+.data-statistics-container {
+  @include wrap;
+
+  .notice {
+    margin-top: $margin-padding-4;
+  }
+}

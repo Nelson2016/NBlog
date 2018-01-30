@@ -1,0 +1,15 @@
+@import "../../constant";
+@import "../../common";
+
+.category-management-container {
+  @include wrap;
+
+  .add-category-btn {
+    width: 100px;
+    margin: $margin-padding-4 0
+  }
+  .category-tree-container {
+    border-top: $color-blue 1px solid;
+    padding-top: $margin-padding-2;
+  }
+}

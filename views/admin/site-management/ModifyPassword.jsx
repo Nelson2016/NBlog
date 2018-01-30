@@ -1,30 +1,30 @@
 import React from 'react';
-
-import Form from '../../components/Form/Form';
-import {Button} from '../../components/Button/Button';
-import {LiteralInput} from '../../components/Input/Input';
-import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
+import {Form, Input, Breadcrumb, Button} from 'nr';
+import config from '../../../config/config';
 
 import styles from "../../../asset/scss/admin/site-management/modify-password.scss";
 
 class ModifyPassword extends React.Component {
 
-    onSubmit(canSubmit) {
+    onSubmit() {
+
     }
 
     render() {
+
         return <div className={styles["modify-password-container"]}>
-            <Breadcrumb routes={this.props.routes} params={this.props.params}/>
+            <Breadcrumb config={config.common.breadcrumb.admin} path={this.props.location.pathname}/>
 
             <div className={styles["modify-password-inputs"]}>
-                <Form onSubmit={this.onSubmit.bind(this)}>
-                    <LiteralInput ref="password" type='password' placeholder='请输入原密码' label='原密码'
-                                  dataType='password'></LiteralInput>
-                    <LiteralInput ref="newPassword" type='password' placeholder='请输入新密码' label='新密码'
-                                  dataType='password'></LiteralInput>
-                    <LiteralInput ref="confirmPassword" type='password' placeholder='请确认新密码' label='新密码'
-                                  dataType='password'></LiteralInput>
-                    <Button ref="modifyPasswordButton" type="submit" text="修改密码" style={{'width': '100%'}}/>
+                <Form onSubmit={this.onSubmit.bind(this)} ctx={this}>
+                    <Input ref={e => this.passwordInput = e} nRef="passwordInput" leftIcon="password"
+                           placeholder="请输入原密码" dataType="password"/>
+                    <Input ref={e => this.newPasswordInput = e} nRef="newPasswordInput" leftIcon="password"
+                           placeholder="请输入新密码" dataType="password"/>
+                    <Input ref={e => this.confirmPasswordInput = e} nRef="confirmPasswordInput" leftIcon="password"
+                           placeholder="请再次输入新密码" dataType="password"/>
+
+                    <Button ref={e => this.modifyPasswordBtn = e} nRef="modifyPasswordBtn" text="修改密码" type="submit"/>
                 </Form>
             </div>
         </div>

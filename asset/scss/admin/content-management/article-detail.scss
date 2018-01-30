@@ -1,0 +1,29 @@
+@import "../../constant";
+@import "../../common";
+
+.article-detail-container {
+
+  @include wrap;
+
+  .edit-inputs {
+
+    margin-top: $margin-padding-4;
+
+  }
+
+  .article-cover {
+
+    min-height: 112px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: $margin-padding-6;
+
+    label {
+
+      margin-right: $margin-padding-2;
+
+    }
+  }
+
+}

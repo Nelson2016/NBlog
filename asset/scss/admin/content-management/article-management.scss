@@ -2,28 +2,15 @@
 @import "../../common";
 
 .article-management-container {
-  max-width: $admin-main-width;
-  margin: 0 auto;
+  @include wrap;
 
-  .article-list-container{
+  .publish-article-btn {
+    width: 100px;
+    margin: $margin-padding-4 0
+  }
 
-    .article-list-ctrls{
-      @include n-clearfix;
-      margin-top: 20px;
-      padding: 10px;
-      border-top: $color-blue 2px solid;
-
-      button{
-        background: none;
-        border:none;
-        color: $color-blue;
-        line-height: 19px;
-        float:left;
-        margin-left: 25px;
-      }
-
-    }
-
+  .page-container {
+    margin: $margin-padding-4 0;
   }
 
 }
@@ -31,15 +18,16 @@
 /*表格通用样式*/
 .rows {
   color: inherit;
-  padding: 5px 10px;
   display: inline-block;
   line-height: 25px;
   vertical-align: middle;
+  font-size: $font-size-1;
+  text-align: center;
 }
 
 .table-title {
   @extend .rows;
-  width: 339px;
+  width: 409px;
   @include n-ellipsis(1);
   text-align: left;
 }
@@ -60,7 +48,7 @@
   line-height: 12px;
 }
 
-.table-ups, .table-views, .table-comments, .table-order, .table-ctrl {
+.table-ups, .table-views, .table-comments, .table-order{
   @extend .rows;
   width: 70px;
 }

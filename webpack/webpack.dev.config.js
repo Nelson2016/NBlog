@@ -6,7 +6,7 @@ let path = require('path'),
     extractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
-    context: path.resolve(__dirname, '..'),//设置解析入口
+    context: rootPath,//设置解析入口
     entry: {
         main: [
             'eventsource-polyfill',
@@ -34,20 +34,18 @@ module.exports = {
             {
                 test: /\.(js|jsx)?$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['es2015', 'react', 'stage-0'],
-                        env: {
-                            development: {
-                                presets: ['react-hmre']
-                            }
+                loader: 'babel-loader',
+                options: {
+                    presets: ['es2015', 'stage-0', 'react'],
+                    env: {
+                        development: {
+                            presets: ['react-hmre']
                         }
-                    },
+                    }
                 },
             },
+            //编译通过import动态引入的scss/css
             {
-                //编译通过import动态引入的scss/css
                 test: /\.(css|scss)?$/,
                 exclude: /node_modules/,
                 use: extractTextPlugin.extract({
@@ -55,12 +53,17 @@ module.exports = {
                     use: [
                         {
                             loader: "css-loader",
-                            options: {importLoaders: 1, modules: true, localIdentName: '[name]-[local]-[hash:base64:8]'}
+                            options: {
+                                importLoaders: 1,
+                                modules: true,
+                                localIdentName: '[name]-[local]-[hash:8]'
+                            }
                         },
                         {
-                            loader: "postcss-loader", options: {
-                            plugins: () => [autoPrefix({browsers: ['last 5 versions']}), postCssImport()]//自动添加浏览器前缀
-                        }
+                            loader: "postcss-loader",
+                            options: {
+                                plugins: () => [autoPrefix({browsers: ['last 5 versions']}), postCssImport()]//自动添加浏览器前缀
+                            }
                         },
                         {loader: "sass-loader"}
                     ]
@@ -73,7 +76,7 @@ module.exports = {
                         loader: "url-loader",
                         options: {
                             limit: 10000,
-                            name: "[name].[ext]",
+                            name: "[hash:8].[ext]",
                             publicPath: '/',
                             outputPath: 'images/',
                         },
@@ -98,5 +101,4 @@ module.exports = {
         new webpack.NoEmitOnErrorsPlugin(),
         new webpack.DefinePlugin({'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)})
     ]
-
 };

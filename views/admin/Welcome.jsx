@@ -1,21 +1,18 @@
 import React from 'react';
+import {connect} from 'react-redux';
 
 import {updateAdminHotList, updateAdminNewList} from "../../store/action";
 
-import Table from '../components/Table/Table';
+import NormalList from './common/NormalList';
 
 import styles from '../../asset/scss/admin/welcome.scss';
 
 class Welcome extends React.Component {
 
-    static contextTypes = {
-        store: React.PropTypes.object.isRequired
-    }
+    constructor(props) {
+        super(props);
 
-    constructor(props, context) {
-        super(props, context);
-
-        let datas = [
+        let data = [
             {
                 title: "这里是标题这里是标题这里是标题这里是标题",
                 author: "Nelson",
@@ -48,26 +45,36 @@ class Welcome extends React.Component {
                 views: "3234",
                 comments: "1233"
             },
-        ]
+        ];
 
-        context.store.dispatch(updateAdminHotList(this.createTableDom(datas, '热门文章')));
-        context.store.dispatch(updateAdminNewList(this.createTableDom(datas, '最新动态')));
 
-        const store = context.store.getState();
-        this.state = {
-            adminHotList: store.adminHotList,
-            adminNewList: store.adminNewList
-        }
+        this.props.updateAdminHotList(this.createTableDom(data, 'hotList'));
+        this.props.updateAdminNewList(this.createTableDom(data, 'newList'));
+
+        this.state = this.props.state;
     }
 
-    createTableDom(datas, title) {
+    /**
+     * @description 根据数据创建表格DOM
+     *
+     * @param data 数据
+     * @param type 创建数据的类型
+     */
+    createTableDom(data, type) {
+
+        const title = [
+            {data: [<span key={type + "title-"} className={styles["table-title"]}>标题</span>]},
+            {data: [<span key={type + "author-"} className={styles["table-author"]}>作者</span>]},
+            {data: [<span key={type + "date-"} className={styles["table-date"]}>日期</span>]},
+            {data: [<span key={type + "ups-"} className={styles["table-ups"]}>赞</span>]},
+            {data: [<span key={type + "views-"} className={styles["table-views"]}>浏览</span>]},
+            {data: [<span key={type + "comments-"} className={styles["table-comments"]}>评论</span>]}
+        ];
+
         return {
-            title: title,
-            more: {
-                text: 'More',
-            },
-            rows: datas.map((tr, index) => [
-                {data: [<span key={"title-" + index} className={styles["table-title"]}>{title + tr.title}</span>]},
+            title,
+            rows: data.map((tr, index) => [
+                {data: [<span key={"title-" + index} className={styles["table-title"]}>{tr.title}</span>]},
                 {data: [<span key={"author-" + index} className={styles["table-author"]}>{tr.author}</span>]},
                 {data: [<span key={"date-" + index} className={styles["table-date"]}>{tr.date}</span>]},
                 {data: [<span key={"ups-" + index} className={styles["table-ups"]}>{tr.ups}</span>]},
@@ -75,6 +82,10 @@ class Welcome extends React.Component {
                 {data: [<span key={"comments-" + index} className={styles["table-comments"]}>{tr.comments}</span>]},
             ])
         }
+    }
+
+    more() {
+        alert('more')
     }
 
     render() {
@@ -88,12 +99,29 @@ class Welcome extends React.Component {
                 <span>最近登陆：Nelson</span>
             </div>
 
-            <Table data={this.state.adminHotList} style={{"marginTop": "20px"}}/>
-            <Table data={this.state.adminNewList} style={{"marginTop": "20px"}}/>
+            <div className={styles["normal-list"]}>
+                <NormalList data={this.props.state.adminHotList} title="热门文章"
+                            more={{text: 'More', onClick: this.more.bind(this)}}/>
+            </div>
+            <div className={styles["normal-list"]}>
+                <NormalList data={this.props.state.adminHotList} title="最新动态"
+                            more={{text: 'More', onClick: this.more.bind(this)}}/>
+            </div>
 
         </div>
     }
 
 }
 
-export default Welcome;
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        updateAdminHotList: (args) => dispatch(updateAdminHotList(args)),
+        updateAdminNewList: (args) => dispatch(updateAdminNewList(args))
+    }
+}
+
+const mapStateToProps = (state, ownProps) => {
+    return {state: state}
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Welcome);

@@ -2,18 +2,17 @@ let fs = require('fs'),
     path = require('path'),
     webpack = require('webpack'),
     autoPrefix = require('autoprefixer'),
-    root = path.resolve(__dirname, '..'),
+    rootPath = path.resolve(__dirname, '..'),
     postCssImport = require('postcss-import'),
     extractTextPlugin = require('extract-text-webpack-plugin');
 
-
 //客户端/服务端打包通用配置
 const baseConfig = {
-    context: path.resolve(__dirname, '..'),//设置解析入口
+    context: rootPath,//设置解析入口
     output: {
-        path: path.resolve(root, 'dist'),
+        path: path.resolve(rootPath, 'dist'),
         filename: "[name].bundle.js",
-        publicPath: path.resolve(root, 'dist/'),
+        publicPath: '/',
     },
     resolve: {
         extensions: [".js", ".jsx", '.scss']
@@ -24,16 +23,13 @@ const baseConfig = {
             {
                 test: /\.(js|jsx)?$/,
                 exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['es2015', 'react', 'env', 'stage-0'],
-                        plugins: ['transform-runtime']
-                    }
+                loader: 'babel-loader',
+                options: {
+                    presets: ['es2015', 'stage-0', 'react'],
                 },
             },
+            //编译通过import动态引入的scss/css
             {
-                //编译通过import动态引入的scss/css
                 test: /\.(css|scss)?$/,
                 exclude: /node_modules/,
                 use: extractTextPlugin.extract({
@@ -41,12 +37,17 @@ const baseConfig = {
                     use: [
                         {
                             loader: "css-loader",
-                            options: {importLoaders: 1, modules: true, localIdentName: '[name]-[local]-[hash:base64:8]'}
+                            options: {
+                                importLoaders: 1,
+                                modules: true,
+                                localIdentName: '[name]-[local]-[hash:8]'
+                            }
                         },
                         {
-                            loader: "postcss-loader", options: {
-                            plugins: () => [autoPrefix({browsers: ['last 5 versions']}), postCssImport()]//自动添加浏览器前缀
-                        }
+                            loader: "postcss-loader",
+                            options: {
+                                plugins: () => [autoPrefix({browsers: ['last 5 versions']}), postCssImport()]//自动添加浏览器前缀
+                            }
                         },
                         {loader: "sass-loader"}
                     ]
@@ -96,7 +97,7 @@ const clientConfig = Object.assign({}, baseConfig, {
 //服务端打包配置
 const serverConfig = Object.assign({}, baseConfig, {
     entry: {
-        server: './server/server.dev',
+        server: ['babel-polyfill', './server/server'],
     },
     target: 'node',
     externals: getExternals(),
@@ -120,8 +121,11 @@ function getPlugins() {
 
 //排除扩展包
 function getExternals() {
+    console.log(path.resolve(__dirname, '../node_modules'))
     return fs.readdirSync(path.resolve(__dirname, '../node_modules'))
-        .filter(filename => !filename.includes('.bin'))
+        .filter(filename => {
+            return !filename.includes('.bin') && filename !== 'nr';
+        })
         .reduce((externals, filename) => {
             externals[filename] = `commonjs ${filename}`;
             return externals

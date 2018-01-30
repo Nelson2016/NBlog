@@ -1,37 +1,40 @@
 import React from 'react';
+import {Breadcrumb, Button, Form, Radio} from 'nr';
 
-import Breadcrumb from "../../components/Breadcrumb/Breadcrumb";
-import {RadioGroup} from "../../components/Input/Input";
-import {Button} from "../../components/Button/Button";
-import Form from "../../components/Form/Form";
-
+import config from '../../../config/config';
 import styles from "../../../asset/scss/admin/site-management/function-set.scss";
 
+const RadioGroup = Radio.RadioGroup;
+
 class FunctionSet extends React.Component {
+
+    onSubmit() {
+
+    }
 
     render() {
         return <div className={styles["function-set-container"]}>
 
-            <Breadcrumb routes={this.props.routes} params={this.props.params}/>
+            <Breadcrumb config={config.common.breadcrumb.admin} path={this.props.location.pathname}/>
 
-            <div className={styles['set-rows']}>
-                <Form>
+            <Form onSubmit={this.onSubmit.bind(this)} ctx={this}>
+                <div className={styles['set-rows']}>
                     <div className={styles["set-row"]}>
-                        <RadioGroup label="是否开放注册：" name="openRegistration" values={[
-                            {label: "开放", value: 1},
-                            {label: "关闭", value: 0}
+                        <RadioGroup name="test" label="是否开放注册：" values={[
+                            {label: "开放", value: 0, defaultChecked: true},
+                            {label: "关闭", value: 1, defaultChecked: false},
                         ]}/>
                     </div>
 
                     <div className={styles["set-row"]}>
-                        <RadioGroup label="是否开放评论：" name="openComment" values={[
-                            {label: "开放", value: 1},
-                            {label: "关闭", value: 0}
+                        <RadioGroup name="test" label="是否开放评论：" values={[
+                            {label: "开放", value: 0, defaultChecked: true},
+                            {label: "关闭", value: 1, defaultChecked: false},
                         ]}/>
                     </div>
-                    <Button ref="set" type="submit" text="保存设置" style={{'width': '100%'}}/>
-                </Form>
-            </div>
+                    <Button ref={e => this.saveBtn = e} nRef="saveBtn" text="保存设置" type="submit"/>
+                </div>
+            </Form>
 
         </div>
     }

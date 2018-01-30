@@ -1,0 +1,10 @@
+@import "../../constant";
+@import "../../common";
+
+.financial-management-container {
+  @include wrap;
+
+  .notice {
+    margin-top: $margin-padding-4;
+  }
+}
