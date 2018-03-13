@@ -4,9 +4,11 @@ export default {
     debug: isDev,
 
     dev: {
+        host: '127.0.0.1',
         port: 3000,
     },
     prod: {
+        host: '',
         port: 8080
     },
     common: {
