@@ -23,7 +23,6 @@ const app = new Koa(),
     isDev = process.env.NODE_ENV === 'development',
     isPro = process.env.NODE_ENV === 'production',
     port = isPro ? config.prod.port : config.dev.port,
-    host = isPro ? config.prod.host : config.dev.host,
     db = mongoose.connection;
 
 db.on('error', () => {
@@ -63,12 +62,12 @@ app.use(uploader({
     "url": '/api/admin/uploadArticleCover',
     "storeDir": 'upload/articleCover',
     "provider": "local",
-    "mimetypes": ['image/png', 'image/jpg', 'image/jpeg'],
+    "mimetypes": ['image/png','image/jpg','image/jpeg'],
     "folder": "dist",
     "urlPath": ""
 }));
 
 //启动服务器
-app.listen(port, host, function () {
+app.listen(port, function () {
     console.log(`👍====Server is running at localhost:${port}====👍`);
 });
