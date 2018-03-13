@@ -11,7 +11,8 @@ export default {
     admin: {
         login: "/api/admin/login",
         addCategory: "/api/admin/addCategory",
-        getCategory: "/api/admin/getCategory"
+        getCategory: "/api/admin/getCategory",
+        editCategory: "/api/admin/editCategory",
     }
 
 }

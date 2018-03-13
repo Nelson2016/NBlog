@@ -8,8 +8,25 @@
     width: 100px;
     margin: $margin-padding-4 0
   }
-  .category-tree-container {
-    border-top: $color-blue 1px solid;
-    padding-top: $margin-padding-2;
+
+  .page-container {
+    margin: $margin-padding-4 0;
   }
+
+}
+
+/*表格通用样式*/
+.rows {
+  color: inherit;
+  display: inline-block;
+  line-height: 25px;
+  vertical-align: middle;
+  font-size: $font-size-1;
+  text-align: center;
+}
+
+.table-category-name{
+  @extend .rows;
+  text-align: left;
+  width: 952px;
 }

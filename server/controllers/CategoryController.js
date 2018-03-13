@@ -8,7 +8,7 @@ import functions from '../functions';
  * @returns {Promise.<void>}
  */
 const addCategory = async (ctx, next) => {
-    const param = ctx.request.body, {name, parentId} = param;
+    const param = ctx.request.body, {name, parentIds} = param, parentId = parentIds[parentIds.length - 1] || '';
 
     if (!name) {
         ctx.body = functions.setResponse(0, '对不起，请填写分类名称');
@@ -28,7 +28,7 @@ const addCategory = async (ctx, next) => {
             if (parentCategoryExist) {
 
                 const category = new CategoryModel({
-                    parentId,
+                    parentIds,
                     name,
                     subIds: []
                 });
@@ -53,7 +53,7 @@ const addCategory = async (ctx, next) => {
         } else {
 
             const category = new CategoryModel({
-                parentId: "",
+                parentIds: [],
                 name,
                 subIds: []
             });
@@ -102,27 +102,81 @@ const formatCategory = async (data) => {
  * @returns {Promise.<void>}
  */
 const getCategory = async (ctx) => {
-    const param = ctx.request.query, {id, format} = param;
+    const param = ctx.request.query, {id, format, page = 1, type} = param,
+        pageSize = 10;
 
     let result = [];
+    let totalPage = 0;
     if (!id) {
         if (format) {
-            const mailCategories = await CategoryModel.find({parentId: ""}).exec();
-            result = await formatCategory(mailCategories)
+            const mailCategories = await CategoryModel.find({parentIds: []}).exec();
+            result = await formatCategory(mailCategories);
         } else {
-            const categories = await CategoryModel.find().exec();
-            result = categories.map((item) => {
-                return {
-                    id: item._id,
-                    title: item.name,
+
+            let categories = [], categoryCount = 0;
+
+            if (type === 'all') {
+                categories = await CategoryModel.find().exec();
+
+                result = categories.map((item) => {
+                    return {
+                        id: item._id,
+                        title: item.name,
+                    }
+                });
+            } else {
+                categories = await CategoryModel.find().limit(pageSize).skip((page - 1) * pageSize).exec();
+                categoryCount = await CategoryModel.count().exec();
+
+                if (categoryCount > 0) {
+                    totalPage = Math.ceil(categoryCount / pageSize);
                 }
-            })
+
+                result = categories.map((item) => {
+                    return {
+                        id: item._id,
+                        title: item.name,
+                    }
+                });
+
+                result = {
+                    list: result,
+                    pages: {totalPage, page}
+                }
+
+            }
+
         }
+
         ctx.body = functions.setResponse(1, '恭喜您，获取成功', result);
     } else {
-        // ctx.body = functions.setResponse(0, '抱歉，获取失败');
+        const category = await CategoryModel.findById(id).exec();
+        if (category) {
+            ctx.body = functions.setResponse(1, '恭喜您，获取成功', category);
+        } else {
+            ctx.body = functions.setResponse(0, '抱歉，获取失败');
+        }
     }
 };
 
+/**
+ * @description 编辑分类
+ */
+const editCategory = async (ctx) => {
+    const param = ctx.request.body, {id, name, parentIds} = param;
+    const categoryExist = !!await CategoryModel.findById(id).exec();
 
-export {addCategory, getCategory}
+    if (categoryExist) {
+        try {
+            await CategoryModel.findByIdAndUpdate(id, {parentIds, name});
+            ctx.body = functions.setResponse(1, '恭喜您，编辑成功');
+        } catch (e) {
+            ctx.body = functions.setResponse(0, '对不起，编辑失败');
+        }
+
+    } else {
+        ctx.body = functions.setResponse(0, '对不起，该分类不存在');
+    }
+};
+
+export {addCategory, getCategory, editCategory}

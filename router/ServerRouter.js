@@ -11,7 +11,7 @@ import functions from '../server/functions';
 
 //Controllers
 import {login, register, logout} from '../server/controllers/UserController';
-import {addCategory, getCategory} from '../server/controllers/CategoryController';
+import {addCategory, getCategory, editCategory} from '../server/controllers/CategoryController';
 
 //Models
 import UserModel from '../server/models/UserModel';
@@ -60,13 +60,15 @@ serverRoutes.all('*', async (ctx, next) => {
 
 });
 
-//Common
+//Common----------
 serverRoutes.post('/api/register', register);
 serverRoutes.post('/api/logout', logout);
 
-//Admin
+//Admin-----------
 serverRoutes.post('/api/admin/login', login);
+//分类
 serverRoutes.post('/api/admin/addCategory', addCategory);
+serverRoutes.post('/api/admin/editCategory', editCategory);
 serverRoutes.get('/api/admin/getCategory', getCategory);
 
 export default serverRoutes;

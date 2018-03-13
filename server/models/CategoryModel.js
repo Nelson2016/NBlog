@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 
 let CategorySchema = new Schema({
-    parentId: String,
+    parentIds: Array,
     name: String,
     subIds: Array
 });

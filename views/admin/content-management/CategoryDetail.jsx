@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Breadcrumb, Input, Form, Upload} from 'nr';
+import {Button, Breadcrumb, Input, Form, Upload, Toast} from 'nr';
 
 import config from '../../../config/config';
 
@@ -14,33 +14,82 @@ class CategoryDetail extends React.Component {
 
     constructor(props, context) {
         super(props);
+
         this.state = {
+            categoryId: this.props.match.params.categoryId,
             categories: []
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        const categoryDetail = await this.getCategoryDetail();
+
+        if (categoryDetail) {
+            this.titleInput.val(categoryDetail.name);
+            this.getCategories(categoryDetail.parentIds);
+        } else {
+            this.getCategories();
+        }
+
+    }
+
+    /**
+     * @description 获取分类列表
+     */
+    getCategories(value = []) {
         const _this = this;
 
-        functions.request(api.admin.getCategory).then((res) => {
+        functions.request(api.admin.getCategory, {
+            body: {type: 'all'}
+        }).then((res) => {
             if (res.status === 1) {
-                _this.categoryInput.setData(res.data);
+                _this.categoryInput.setData({
+                    data: res.data,
+                    value
+                });
             }
         })
     }
 
-    onSubmit() {
-        const parentIds = this.categoryInput.val().valueIdArr;
-        const parentId = parentIds[parentIds.length - 1] || '';
+    /**
+     * @description 获取分类详情
+     */
+    async getCategoryDetail() {
+        const categoryId = this.state.categoryId;
+        if (categoryId) {
+            return await functions.request(api.admin.getCategory, {
+                body: {id: categoryId}
+            }).then((res) => {
+                if (res.status === 1) {
+                    return Promise.resolve(res.data);
+                } else {
+                    return Promise.resolve(undefined);
+                }
+            })
+        } else {
+            return undefined;
+        }
+    }
 
-        functions.request(api.admin.addCategory, {
+    /**
+     * @description 添加分类
+     */
+    onSubmit() {
+        const parentIds = this.categoryInput.val().value, categoryId = this.state.categoryId;
+        let postData = {
+            name: this.titleInput.val(),
+            parentIds
+        };
+        categoryId && (postData.id = categoryId);
+        functions.request(categoryId ? api.admin.editCategory : api.admin.addCategory, {
             method: "POST",
-            body: {
-                name: this.titleInput.val(),
-                parentId
-            }
+            body: postData
         }).then((res) => {
-            console.log(res);
+            if (res.status === 1) {
+                Toast.success(res.message);
+            } else {
+                Toast.error(res.message);
+            }
         })
     }
 

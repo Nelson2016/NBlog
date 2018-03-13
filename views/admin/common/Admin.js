@@ -54,6 +54,8 @@ class Admin extends React.Component {
                     <Route exact path="/admin/contentManagement/commentManagement" component={CommentManagement}/>
                     <Route exact path="/admin/contentManagement/categoryManagement/categoryDetail"
                            component={CategoryDetail}/>
+                    <Route exact path="/admin/contentManagement/categoryManagement/categoryDetail/:categoryId"
+                           component={CategoryDetail}/>
                     <Route exact path="/admin/contentManagement/categoryManagement" component={CategoryManagement}/>
                     <Route exact path="/admin/contentManagement/articleManagement/articleDetail"
                            component={ArticleDetail}/>

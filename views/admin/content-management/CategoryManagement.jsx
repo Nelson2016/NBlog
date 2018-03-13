@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {Button, Breadcrumb, Tree} from 'nr';
+import {Button, Breadcrumb, Table, Page, Checkbox} from 'nr';
 
 import config from '../../../config/config';
 
@@ -16,60 +16,97 @@ class CategoryManagement extends React.Component {
     constructor(props, context) {
         super(props);
 
-        // let data = [
-        //     {
-        //         title: "这里是主题1",
-        //         sub: [
-        //             {title: "这里是主题1的子主题1"},
-        //             {title: "这里是主题1的子主题1"},
-        //             {
-        //                 title: "这里是主题1的子主题1",
-        //                 sub: [
-        //                     {title: "这里是主题1的子主题1的子主题"},
-        //                 ]
-        //             }
-        //         ]
-        //     },
-        //     {
-        //         title: "这里是主题2",
-        //         sub: [
-        //             {title: "这里是主题2的子主题1"},
-        //             {title: "这里是主题2的子主题2"}
-        //         ]
-        //     }
-        // ];
-        //
-        // this.props.updateCategoryList(data);
-        //
-        // this.state = this.props.state;
-
+        this.state = this.props.state;
     }
 
     componentDidMount() {
+        this.getCategoryList();
+    }
+
+    /**
+     * @description 获取分类列表
+     * @param page  页码
+     */
+    getCategoryList(page = 1) {
+        const _this = this;
         functions.request(api.admin.getCategory, {
-            body: {
-                format: true
-            }
+            body: {page}
         }).then((res) => {
             if (res.status === 1) {
-                this.props.updateCategoryList(res.data)
+                const data = res.data, pages = data.pages;
+
+                _this.props.updateCategoryList(data);
+                _this.pages.setPageData(pages.page, pages.totalPage)
             }
         })
     }
 
-    onChoose() {
+    /**
+     * @description 进入添加分类页面
+     */
+    enterAddCategory(categoryId) {
+        let pathname = config.common.breadcrumb.admin.categoryDetail.path;
+        categoryId && (pathname += '/' + categoryId);
+
         this.props.history.push({
-            pathname: config.common.breadcrumb.admin.categoryDetail.path,
+            pathname
         })
     }
 
-    enterAddCategory() {
-        this.props.history.push({
-            pathname: config.common.breadcrumb.admin.categoryDetail.path,
+    /**
+     * @description 全选
+     */
+    toCheckAll() {
+        const _this = this, categoryList = this.props.state.categoryList.list || [];
+
+        categoryList.map((item, index) => {
+            _this["checkbox" + index].setChecked(this.checkAll.isChecked());
         })
+    }
+
+    /**
+     * @description 根据数据创建表格DOM
+     *
+     * @param data 数据
+     * @param type 创建数据的类型
+     */
+    createTableDom(data) {
+
+        const title = [
+            {
+                data: [
+                    <span key='checkAllContainer' className={styles["table-checkbox"]}>
+                        <Checkbox ref={e => this.checkAll = e} key="checkAll" name="checkAll" value="-1"
+                                  onChange={this.toCheckAll.bind(this)}/>
+                    </span>
+                ]
+            },
+            {data: [<span key={"category-name"} className={styles["table-category-name"]}>分类名</span>]},
+        ];
+
+        return {
+            title,
+            rows: data.map((tr, index) => [
+                {
+                    data: [
+                        <span key={'checkboxContainer' + index} className={styles["table-checkbox"]}>
+                            <Checkbox key={"checkbox" + index} name="checkbox" value={index}
+                                      ref={e => this["checkbox" + index] = e}/>
+                        </span>
+                    ]
+                },
+                {
+                    data: [<span key={"category-name-" + index}
+                                 onClick={this.enterAddCategory.bind(this, tr.id)}
+                                 className={styles["table-category-name"]}>{tr.title}</span>]
+                },
+            ])
+        }
     }
 
     render() {
+
+        const list = this.props.state.categoryList ? this.props.state.categoryList.list : [];
 
         return <div className={styles["category-management-container"]}>
             <Breadcrumb config={config.common.breadcrumb.admin} path={this.props.location.pathname}/>
@@ -78,9 +115,13 @@ class CategoryManagement extends React.Component {
                 <Button text="创建分类" onClick={this.enterAddCategory.bind(this)}/>
             </div>
 
-            <div className={styles["category-tree-container"]}>
-                <Tree data={this.props.state.categoryList || []} onChoose={this.onChoose.bind(this)}/>
+            <div className={styles["category-list-container"]}>
+                <Table data={this.createTableDom(list)}/>
             </div>
+            <div className={styles['page-container']}>
+                <Page ref={e => this.pages = e} onChange={this.getCategoryList.bind(this)}/>
+            </div>
+
         </div>
     }
 

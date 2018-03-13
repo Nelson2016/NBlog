@@ -9,6 +9,7 @@ module.exports = {
     context: rootPath,//设置解析入口
     entry: {
         main: [
+            'babel-polyfill',
             'eventsource-polyfill',
             'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=10000&reload=true',
             './views/app.js'
