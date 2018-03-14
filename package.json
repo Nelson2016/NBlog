@@ -4,14 +4,14 @@
   "description": "Nelson's Blog",
   "main": "./views/app.js",
   "scripts": {
-    "setup": "npm install && npm install cp-cli -g && install rimraf -g",
+    "setup": "npm install && npm install cp-cli -g && install rimraf -g && npm install forever -g",
     "dev": "run-s clean start:dev",
     "prod": "run-s clean build:prod start:prod",
     "build:dev": "webpack --config ./webpack/webpack.dev.config.js --progress",
     "build:prod": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.prod.config.js --progress",
     "clean": "rimraf ./dist/*.* && cp-cli favicon.ico dist && cp-cli ./asset/images/N-black.png ./dist/N-black.png",
     "start:dev": "cross-env NODE_ENV=development nodemon ./webpack/start --watch ./dist --watch ./server",
-    "start:prod": "node ./dist/server.bundle"
+    "start:prod": "forever start ./dist/server.bundle"
   },
   "repository": {
     "type": "git",

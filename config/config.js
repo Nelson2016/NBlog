@@ -7,7 +7,7 @@ export default {
         port: 3000,
     },
     prod: {
-        port: 8080
+        port: 80
     },
     common: {
         breadcrumb: {
