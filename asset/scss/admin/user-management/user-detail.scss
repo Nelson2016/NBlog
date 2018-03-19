@@ -1,0 +1,15 @@
+@import "../../constant";
+@import "../../common";
+
+.user-detail-container {
+
+  @include wrap;
+
+  .edit-inputs {
+
+    margin-top: $margin-padding-4;
+
+  }
+
+
+}

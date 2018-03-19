@@ -26,7 +26,9 @@ export default {
                 commentManagement: {name: "评论管理", path: "/admin/contentManagement/commentManagement"},
                 categoryManagement: {name: "分类管理", path: "/admin/contentManagement/categoryManagement"},
                 categoryDetail: {name: "分类详情", path: "/admin/contentManagement/categoryManagement/categoryDetail"},
+
                 userManagement: {name: "用户管理", path: "/admin/userManagement/userManagement"},
+                userDetail: {name: "用户详情", path: "/admin/userManagement/userDetail"},
 
                 financialManagement: {name: "财务管理", path: "/admin/financialManagement/financialManagement"},
 

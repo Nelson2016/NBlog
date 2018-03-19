@@ -1,9 +1,10 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {Button, Breadcrumb, Table, Page, Checkbox} from 'nr';
 
 import config from '../../../config/config';
+import functions from '../../../asset/js/functions';
+import api from '../../../asset/js/api';
 
 import styles from '../../../asset/scss/admin/content-management/article-management.scss';
 
@@ -16,32 +17,25 @@ class ArticleManagement extends React.Component {
     }
 
     componentDidMount() {
+        this.getArticles();
+    }
 
-        let datas = [{
-            title: "1这里是标题这里是标题这里是标题这里是标题1这里是标题这里是标题这里是标题这里是标题",
-            author: "Nelson",
-            date: "2017-01-01 12:12:12",
-            ups: "12",
-            views: "324",
-            comments: "123"
-        }, {
-            title: "2这里是标题这里是标题这里是标题这里是标题",
-            author: "Nelson",
-            date: "2017-01-01 12:12:12",
-            ups: "12",
-            views: "324",
-            comments: "123"
-        }, {
-            title: "3这里是标题这里是标题这里是标题这里是标题",
-            author: "Nelson",
-            date: "2017-01-01 12:12:12",
-            ups: "12",
-            views: "324",
-            comments: "123"
-        }];
+    /**
+     * @description 获取文章列表
+     * @param page  页码
+     */
+    getArticles(page = 1) {
+        const _this = this;
+        functions.request(api.admin.getArticles, {
+            body: {page}
+        }).then((res) => {
+            if (res.status === 1) {
+                const data = res.data, pages = data.pages;
 
-        this.props.updateArticleList(this.createTableDom(datas));
-
+                _this.props.updateArticleList(data.list);
+                _this.pages.setPageData(pages.page, pages.totalPage)
+            }
+        })
     }
 
     /**
@@ -77,39 +71,72 @@ class ArticleManagement extends React.Component {
 
         return {
             title,
-            onClickRow: this.onClickRow.bind(this),
-            rows: data.map((tr, index) => [
-                {
-                    data: [
-                        <span key={'checkboxContainer' + index} className={styles["table-checkbox"]}>
+            rows: data.map((tr, index) => {
+
+                const createAtObject = functions.getStrTime(tr.createAt);
+                const createAt = createAtObject.year + '-' + createAtObject.month + '-' + createAtObject.day;
+
+                return [
+                    {
+                        data: [<span key={'checkboxContainer' + index} className={styles["table-checkbox"]}>
                             <Checkbox key={"checkbox" + index} name="checkbox" value={index}
                                       ref={e => this["checkbox" + index] = e}/>
-                        </span>
-                    ]
-                },
-                {data: [<span key={"title-" + index} className={styles["table-title"]}>{tr.title}</span>]},
-                {data: [<span key={"author-" + index} className={styles["table-author"]}>{tr.author}</span>]},
-                {data: [<span key={"date-" + index} className={styles["table-date"]}>{tr.date}</span>]},
-                {data: [<span key={"ups-" + index} className={styles["table-ups"]}>{tr.ups}</span>]},
-                {data: [<span key={"views-" + index} className={styles["table-views"]}>{tr.views}</span>]},
-                {data: [<span key={"comments-" + index} className={styles["table-comments"]}>{tr.comments}</span>]}
-            ])
+                        </span>]
+                    },
+                    {
+                        data: [<span key={"title-" + index}
+                                     className={styles["table-title"]}
+                                     onClick={this.goArticleDetail.bind(this, tr._id)}>{tr.title}</span>]
+                    },
+                    {
+                        data: [<span key={"author-" + index}
+                                     className={styles["table-author"]}
+                                     onClick={this.goArticleDetail.bind(this, tr._id)}>{tr.author}</span>]
+                    },
+                    {
+                        data: [<span key={"date-" + index}
+                                     className={styles["table-date"]}
+                                     onClick={this.goArticleDetail.bind(this, tr._id)}>{createAt}</span>]
+                    },
+                    {
+                        data: [<span key={"ups-" + index}
+                                     className={styles["table-ups"]}
+                                     onClick={this.goArticleDetail.bind(this, tr._id)}>{tr.up}</span>]
+                    },
+                    {
+                        data: [<span key={"views-" + index}
+                                     className={styles["table-views"]}
+                                     onClick={this.goArticleDetail.bind(this, tr._id)}>0</span>]
+                    },
+                    {
+                        data: [<span key={"comments-" + index}
+                                     className={styles["table-comments"]}
+                                     onClick={this.goArticleDetail.bind(this, tr._id)}>0</span>]
+                    }
+                ]
+            })
         }
     }
 
-    onClickRow() {
+    goArticleDetail(articleId) {
+
+        let pathname = config.common.breadcrumb.admin.articleDetail.path;
+        articleId && (pathname += '/' + articleId);
+
         this.props.history.push({
-            pathname: config.common.breadcrumb.admin.articleDetail.path,
+            pathname
         })
     }
 
-    enterPublishArticle(){
+    enterPublishArticle() {
         this.props.history.push({
             pathname: config.common.breadcrumb.admin.articleDetail.path,
         })
     }
 
     render() {
+
+        const articleList = this.props.state.articleList || [];
 
         return <div className={styles["article-management-container"]}>
             <Breadcrumb config={config.common.breadcrumb.admin} path={this.props.location.pathname}/>
@@ -118,9 +145,9 @@ class ArticleManagement extends React.Component {
                 <Button onClick={this.enterPublishArticle.bind(this)} text="发布文章"/>
             </div>
 
-            <Table data={this.props.state.articleList || {}}/>
+            <Table data={this.createTableDom(articleList)}/>
             <div className={styles['page-container']}>
-                <Page currentPage={1} totalPage={10}/>
+                <Page ref={e => this.pages = e} currentPage={1} totalPage={10}/>
             </div>
         </div>
     }

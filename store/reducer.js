@@ -21,7 +21,7 @@ let reducers = (state, action) => {
                 categoryList: action.data
             });
         case "updateUserList":
-            return Object.assign(state, {
+            return Object.assign({}, state, {
                 userList: action.data
             });
         case "changeLoginStatus":

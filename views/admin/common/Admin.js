@@ -17,6 +17,7 @@ import CategoryDetail from '../content-management/CategoryDetail';
 import CommentManagement from '../content-management/CommentManagement';
 
 import UserManagement from '../user-management/UserManagement';
+import UserDetail from '../user-management/UserDetail';
 
 import FinancialManagement from '../financial-management/FinancialManagement';
 
@@ -47,6 +48,7 @@ class Admin extends React.Component {
                     <Route exact path="/admin/financialManagement"
                            render={() => <Redirect to="/admin/financialManagement/financialManagement"/>}/>
 
+                    <Route exact path="/admin/userManagement/userDetail/:uid" component={UserDetail}/>
                     <Route exact path="/admin/userManagement/userManagement" component={UserManagement}/>
                     <Route exact path="/admin/userManagement"
                            render={() => <Redirect to="/admin/userManagement/userManagement"/>}/>
@@ -58,6 +60,8 @@ class Admin extends React.Component {
                            component={CategoryDetail}/>
                     <Route exact path="/admin/contentManagement/categoryManagement" component={CategoryManagement}/>
                     <Route exact path="/admin/contentManagement/articleManagement/articleDetail"
+                           component={ArticleDetail}/>
+                    <Route exact path="/admin/contentManagement/articleManagement/articleDetail/:articleId"
                            component={ArticleDetail}/>
                     <Route exact path="/admin/contentManagement/articleManagement" component={ArticleManagement}/>
                     <Route exact path="/admin/contentManagement"

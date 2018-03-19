@@ -74,21 +74,26 @@ class CategoryDetail extends React.Component {
     /**
      * @description 添加分类
      */
-    onSubmit() {
+    onSubmit(canSubmit) {
+
+        if (!canSubmit) {
+            return;
+        }
+
         const parentIds = this.categoryInput.val().value, categoryId = this.state.categoryId;
         let postData = {
             name: this.titleInput.val(),
             parentIds
         };
+
         categoryId && (postData.id = categoryId);
+
         functions.request(categoryId ? api.admin.editCategory : api.admin.addCategory, {
             method: "POST",
             body: postData
         }).then((res) => {
             if (res.status === 1) {
                 Toast.success(res.message);
-            } else {
-                Toast.error(res.message);
             }
         })
     }

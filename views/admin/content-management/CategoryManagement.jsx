@@ -3,13 +3,13 @@ import {connect} from 'react-redux';
 import {Button, Breadcrumb, Table, Page, Checkbox} from 'nr';
 
 import config from '../../../config/config';
+import functions from '../../../asset/js/functions';
+import api from '../../../asset/js/api';
 
 import styles from '../../../asset/scss/admin/content-management/category-management.scss';
 
 import {updateCategoryList} from '../../../store/action';
 
-import functions from '../../../asset/js/functions';
-import api from '../../../asset/js/api';
 
 class CategoryManagement extends React.Component {
 
@@ -35,7 +35,7 @@ class CategoryManagement extends React.Component {
             if (res.status === 1) {
                 const data = res.data, pages = data.pages;
 
-                _this.props.updateCategoryList(data);
+                _this.props.updateCategoryList(data.list);
                 _this.pages.setPageData(pages.page, pages.totalPage)
             }
         })
@@ -97,7 +97,7 @@ class CategoryManagement extends React.Component {
                 },
                 {
                     data: [<span key={"category-name-" + index}
-                                 onClick={this.enterAddCategory.bind(this, tr.id)}
+                                 onClick={this.enterAddCategory.bind(this, tr._id)}
                                  className={styles["table-category-name"]}>{tr.title}</span>]
                 },
             ])
@@ -106,7 +106,7 @@ class CategoryManagement extends React.Component {
 
     render() {
 
-        const list = this.props.state.categoryList ? this.props.state.categoryList.list : [];
+        const list = this.props.state.categoryList || [];
 
         return <div className={styles["category-management-container"]}>
             <Breadcrumb config={config.common.breadcrumb.admin} path={this.props.location.pathname}/>

@@ -120,7 +120,7 @@ const getCategory = async (ctx) => {
 
                 result = categories.map((item) => {
                     return {
-                        id: item._id,
+                        _id: item._id,
                         title: item.name,
                     }
                 });
@@ -134,7 +134,7 @@ const getCategory = async (ctx) => {
 
                 result = categories.map((item) => {
                     return {
-                        id: item._id,
+                        _id: item._id,
                         title: item.name,
                     }
                 });

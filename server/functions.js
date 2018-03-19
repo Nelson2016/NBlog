@@ -74,5 +74,32 @@ export default {
             str += chars.charAt(Math.floor(Math.random() * chars.length));
         }
         return str;
+    },
+    /**
+     * @description 判断是否管理用户
+     * @param ctx
+     */
+    isAdmin: (ctx) => {
+        if (!ctx.session.user) {
+            ctx.body = this.setResponse(-1, '抱歉，请先登录');
+            return false;
+        } else if (!ctx.session.user.admin) {
+            ctx.body = this.setResponse(0, '抱歉，您没有权限进行此操作');
+            return false;
+        } else {
+            return true;
+        }
+    },
+    /**
+     * @description 判断是否登录
+     * @param ctx
+     */
+    isLogged: (ctx) => {
+        if (!ctx.session.user) {
+            ctx.body = this.setResponse(-1, '抱歉，请先登录');
+            return false;
+        } else {
+            return true;
+        }
     }
 }

@@ -52,4 +52,28 @@ export default {
         })
 
     },
+    /**
+     * @description     根据时间戳获取时间值
+     * @param stamp     时间戳
+     * @returns {{year: number, month: string, day: string, hour: string, minute: string, second: string}}
+     */
+    getStrTime: (stamp) => {
+        const timeObject = new Date(stamp);
+
+        let year = timeObject.getFullYear(),
+            month = (timeObject.getMonth() + 1).toString(),
+            day = timeObject.getDate().toString(),
+            hour = timeObject.getHours().toString(),
+            minute = timeObject.getMinutes().toString(),
+            second = timeObject.getSeconds().toString();
+
+        //格式化一位数的时间字符串
+        month.length < 2 && (month = '0' + month);
+        day.length < 2 && (day = '0' + day);
+        hour.length < 2 && (hour = '0' + hour);
+        minute.length < 2 && (minute = '0' + minute);
+        second.length < 2 && (second = '0' + second);
+
+        return {year, month, day, hour, minute, second};
+    }
 }

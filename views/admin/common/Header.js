@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavLink} from 'react-router-dom';
+import {NavLink, withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 
 import navigator from './navigator';
@@ -67,6 +67,8 @@ class Header extends React.Component {
             <NavLink activeClassName={styles['n-active']} to={mainItem.link}
                      data-index={mainIndex}>{mainItem.text}</NavLink>
         </li>);
+
+
         let subNavigator = navigator.map((mainItem, mainIndex) =>
             <menu key={"sub-navigator-container-" + mainIndex} className={styles['sub-nav']}>
                 <ul>
@@ -122,4 +124,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
