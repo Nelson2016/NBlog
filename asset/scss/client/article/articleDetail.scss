@@ -1,0 +1,41 @@
+@import "../../constant.scss";
+@import "../../common.scss";
+
+.main-container {
+
+  padding: $margin-padding-4;
+
+  .article-title {
+
+    text-align: center;
+    margin: $margin-padding-4 0;
+
+  }
+
+  .article-info {
+
+    span {
+      display: block;
+      text-align: center;
+      font-size: $font-size-2;
+      color: $font-color-gray;
+
+    }
+
+  }
+
+  .article-abstract {
+
+    color: $font-color-gray;
+    margin: $margin-padding-4 0;
+    font-size: $font-size-2;
+    padding: $margin-padding-2;
+    background: $background-color-gray;
+    border-radius: $border-radius-1;
+  }
+
+  .article-content {
+    margin-top: $margin-padding-6;
+  }
+
+}

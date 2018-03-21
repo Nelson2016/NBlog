@@ -1,4 +1,5 @@
 import ArticleModel from '../models/ArticleModel';
+import CategoryModel from '../models/CategoryModel';
 import UserModel from '../models/UserModel';
 import functions from '../functions';
 
@@ -70,21 +71,38 @@ const publishArticle = async (ctx) => {
 const getArticles = async (ctx) => {
     const param = ctx.request.query,
         articlesWithName = [],
-        {page = 1} = param,
+        {page = 1, categoryId} = param,
         pageSize = 10,
-        totalPage = Math.ceil(await ArticleModel.count().exec() / 10);
+        totalPage = Math.ceil(await ArticleModel.count().exec() / pageSize);
 
-    const articles = await ArticleModel.find().limit(pageSize).skip((page - 1) * pageSize).exec();
+    let articles = [];
+
+    if (categoryId === '0' || categoryId === undefined) {
+        articles = await ArticleModel.find().limit(pageSize).skip((page - 1) * pageSize).exec();
+    } else {
+        articles = await ArticleModel.find({categoryId}).limit(pageSize).skip((page - 1) * pageSize).exec();
+    }
 
     for (let i = 0; i < articles.length; i++) {
-        let item = articles[i];
-        const info = await UserModel.findById(item.author).exec();
-        item.author = info.username;
-        articlesWithName.push(item)
+        const author = await UserModel.findById(articles[i].author).exec();
+        const category = await CategoryModel.findById(articles[i].categoryId).exec();
+
+        articlesWithName.push({
+            abstract: articles[i].abstract,
+            author: author || {},
+            category: category || {},
+            content: articles[i].content,
+            cover: articles[i].cover,
+            createAt: articles[i].createAt,
+            title: articles[i].title,
+            up: articles[i].up,
+            updateAt: articles[i].updateAt,
+            _id: articles[i]._id,
+        });
     }
 
     ctx.body = functions.setResponse(1, '恭喜您，获取成功', {
-        list: articles,
+        list: articlesWithName,
         pages: {totalPage, page}
     });
 };
@@ -99,10 +117,26 @@ const getArticleDetail = async (ctx) => {
 
     const articleDetail = await ArticleModel.findById(articleId).exec();
 
+    const author = await UserModel.findById(articleDetail.author).exec();
+    const category = await CategoryModel.findById(articleDetail.categoryId).exec();
+
+    let articleDetailWithAuthor = {
+        abstract: articleDetail.abstract,
+        author: author || {},
+        category: category || {},
+        content: articleDetail.content,
+        cover: articleDetail.cover,
+        createAt: articleDetail.createAt,
+        title: articleDetail.title,
+        up: articleDetail.up,
+        updateAt: articleDetail.updateAt,
+        _id: articleId,
+    };
+
     if (!articleDetail) {
         ctx.body = functions.setResponse(0, '抱歉，文章不存在');
     } else {
-        ctx.body = functions.setResponse(1, '恭喜您，获取成功', articleDetail);
+        ctx.body = functions.setResponse(1, '恭喜您，获取成功', articleDetailWithAuthor);
     }
 
 };

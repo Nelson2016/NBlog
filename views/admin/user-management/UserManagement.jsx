@@ -146,7 +146,7 @@ class UserManagement extends React.Component {
                 <Table data={this.createTableDom(list)}/>
             </div>
             <div className={styles['page-container']}>
-                <Page ref={e => this.pages = e} currentPage={1} totalPage={10}/>
+                <Page ref={e => this.pages = e} onChange={this.getUsers.bind(this)}/>
             </div>
         </div>
     }

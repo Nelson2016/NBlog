@@ -23,6 +23,13 @@ export default {
         publishArticle: "/api/admin/publishArticle",
         getArticles: "/api/admin/getArticles",
         editArticle: "/api/admin/editArticle",
+    },
+
+    client: {
+        getCategory: "/api/client/getCategory",
+
+        getArticleDetail: "/api/client/getArticleDetail",
+        getArticles: "/api/client/getArticles",
     }
 
 }

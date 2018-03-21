@@ -7,7 +7,7 @@ export default {
         port: 3000,
     },
     prod: {
-        port: 80
+        port: 8080
     },
     common: {
         breadcrumb: {
@@ -36,7 +36,8 @@ export default {
             },
             client: {
                 clientLogin: {name: "客户端登录", path: "/clientLogin"},
-                client: {name: "首页", path: "/client"}
+                client: {name: "首页", path: "/client"},
+                articleDetail: {name: "文章详情", path: "/client/articleDetail"}
             }
         }
     }

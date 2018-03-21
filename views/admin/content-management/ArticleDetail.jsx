@@ -1,6 +1,8 @@
 import React from 'react';
 import {Button, Breadcrumb, Input, Form, Upload, Editor, Toast} from 'nr';
 
+const EditorComponent = Editor.Editor;
+
 import config from '../../../config/config';
 import functions from '../../../asset/js/functions';
 import api from '../../../asset/js/api';
@@ -29,7 +31,7 @@ class ArticleDetail extends React.Component {
         if (articleDetail) {
             this.setContent(articleDetail);
             this.coverInput.setFiles([{local: '', server: articleDetail.cover}]);
-            await this.getCategories([articleDetail.categoryId]);
+            await this.getCategories([articleDetail.category._id]);
         } else {
             await this.getCategories();
         }
@@ -94,9 +96,14 @@ class ArticleDetail extends React.Component {
             categoryId = this.categoryInput.val().value[0] || '',
             _this = this;
 
-        let cover = this.coverInput.getFiles()[0];
-        if (cover && cover.server.indexOf('/dist') === 0) {
-            cover = cover.server.substring(5)
+        let cover = this.coverInput.getFiles()[0]
+
+        if (cover) {
+            if (cover.server.indexOf('/dist') === 0) {
+                cover = cover.server.substring(5);
+            } else {
+                cover = cover.server;
+            }
         }
 
         if (!cover) {
@@ -168,7 +175,7 @@ class ArticleDetail extends React.Component {
                               placeholder="请选择所属分类"/>
 
                     <div className={styles["editor-container"]}>
-                        <Editor ref={e => this.contentInput = e}/>
+                        <EditorComponent ref={e => this.contentInput = e}/>
                     </div>
 
                     <Button ref={e => this.loginBtn = e} text="发布" type="submit"/>

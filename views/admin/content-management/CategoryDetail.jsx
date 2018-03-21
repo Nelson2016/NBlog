@@ -22,6 +22,7 @@ class CategoryDetail extends React.Component {
     }
 
     async componentDidMount() {
+
         const categoryDetail = await this.getCategoryDetail();
 
         if (categoryDetail) {
@@ -96,6 +97,7 @@ class CategoryDetail extends React.Component {
                 Toast.success(res.message);
             }
         })
+
     }
 
     render() {

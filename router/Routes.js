@@ -3,10 +3,12 @@ import {Route, Redirect, Switch} from 'react-router-dom';
 
 import Root from '../views/Root';
 
-import Client from '../views/client/Client';
+import Client from '../views/client/common/Client';
 
 import Admin from '../views/admin/common/Admin';
 import AdminLogin from '../views/admin/AdminLogin';
+
+import NotFound from '../views/NotFound';
 
 
 const Routes = (state) => <Root>
@@ -22,7 +24,7 @@ const Routes = (state) => <Root>
             return state.isLogged ? <Redirect to="/admin"/> : <AdminLogin/>
         }}/>
 
-        <Route path="/404" render={() => <div>404</div>}/>
+        <Route path="/404" component={NotFound}/>
         <Redirect to="/404"/>
     </Switch>
 </Root>;

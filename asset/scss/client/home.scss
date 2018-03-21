@@ -1,0 +1,15 @@
+@import "../constant.scss";
+
+.home-container {
+
+  padding: $margin-padding-4;
+
+  .banner {
+    width: 100%;
+  }
+
+  .home-list {
+    margin-bottom: $margin-padding-4;
+  }
+
+}

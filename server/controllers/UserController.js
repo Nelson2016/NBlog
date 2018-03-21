@@ -115,7 +115,7 @@ const getUsers = async (ctx) => {
     const param = ctx.request.query,
         {page = 1} = param,
         pageSize = 10,
-        totalPage = Math.ceil(await UserModel.count().exec() / 10);
+        totalPage = Math.ceil(await UserModel.count().exec() / pageSize);
 
     const users = await UserModel.find().limit(pageSize).skip((page - 1) * pageSize).exec();
 

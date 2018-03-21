@@ -1,0 +1,72 @@
+@import "../../constant.scss";
+@import "../../common.scss";
+
+.common-list-container {
+
+  ul {
+
+    li {
+
+      @include n-bottom-line;
+      padding: 35px 20px;
+
+      &:hover {
+        background: $background-color-gray;
+      }
+
+      a {
+
+        display: flex;
+
+        .common-list-cover {
+          width: 400px;
+          height: 200px;
+          flex-shrink: 0;
+          margin-right: 20px;
+        }
+
+        .common-list-content {
+          flex-grow: 1;
+
+          .common-list-info {
+
+            span {
+              font-size: $font-size-3;
+              margin-right: $margin-padding-2;
+            }
+
+            .common-list-category {
+              color: $color-blue;
+            }
+
+            .common-list-time {
+              color: $font-color-gray;
+            }
+
+          }
+
+          .common-list-title {
+            @include n-ellipsis(2);
+
+            font-size: $font-size-5;
+            margin: 10px 0 20px 0;
+            line-height: 30px;
+            height: 60px;
+          }
+
+          .common-list-abstract {
+            @include n-ellipsis(3);
+
+            color: $font-color-gray;
+            font-size: $font-size-2;
+          }
+
+        }
+
+      }
+
+    }
+
+  }
+
+}

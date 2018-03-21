@@ -91,7 +91,7 @@ class ArticleManagement extends React.Component {
                     {
                         data: [<span key={"author-" + index}
                                      className={styles["table-author"]}
-                                     onClick={this.goArticleDetail.bind(this, tr._id)}>{tr.author}</span>]
+                                     onClick={this.goArticleDetail.bind(this, tr._id)}>{tr.author.username}</span>]
                     },
                     {
                         data: [<span key={"date-" + index}
@@ -147,7 +147,7 @@ class ArticleManagement extends React.Component {
 
             <Table data={this.createTableDom(articleList)}/>
             <div className={styles['page-container']}>
-                <Page ref={e => this.pages = e} currentPage={1} totalPage={10}/>
+                <Page ref={e => this.pages = e} onChange={this.getArticles.bind(this)}/>
             </div>
         </div>
     }

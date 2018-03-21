@@ -70,8 +70,10 @@ serverRoutes.all('*', async (ctx, next) => {
 
     } else {
         if (config.debug) {
+            console.log('start-------' + ctx.url + '---------')
             console.log(ctx.request.body);
             console.log(ctx.request.query);
+            console.log('end-------' + ctx.url + '---------')
         }
         await next();
     }
@@ -101,5 +103,12 @@ serverRoutes.post('/api/admin/editArticle', editArticle);
 serverRoutes.get('/api/admin/getArticles', getArticles);
 serverRoutes.get('/api/admin/getArticleDetail', getArticleDetail);
 
+//Admin-----------
+//分类
+serverRoutes.get('/api/client/getCategory', getCategory);
+
+//文章
+serverRoutes.get('/api/client/getArticles', getArticles);
+serverRoutes.get('/api/client/getArticleDetail', getArticleDetail);
 
 export default serverRoutes;
