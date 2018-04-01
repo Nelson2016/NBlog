@@ -69,5 +69,5 @@ app.use(uploader({
 
 //启动服务器
 app.listen(port, function () {
-    console.log(`👍====Server is running at localhost:${port}====👍`);
+    console.log(`👍====Server is running at port:${port}====👍`);
 });
