@@ -13,7 +13,8 @@
     "build:prod": "cross-env NODE_ENV=production webpack --config ./webpack/webpack.prod.config.js --progress",
     "clean": "rimraf ./dist/*.* && cp-cli favicon.ico dist && cp-cli ./asset/images/N-black.png ./dist/N-black.png",
     "start:dev": "cross-env NODE_ENV=development nodemon ./webpack/start --watch ./dist --watch ./server",
-    "start:prod": "node ./dist/server.bundle.js"
+    "start:prod": "forever start ./dist/server.bundle.js",
+    "stop:prod": "forever stop ./dist/server.bundle.js"
   },
   "repository": {
     "type": "git",
